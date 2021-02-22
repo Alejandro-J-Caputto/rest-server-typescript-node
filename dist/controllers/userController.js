@@ -13,11 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
-const connectionDB_1 = __importDefault(require("../database/connectionDB"));
+const connectionDB_1 = require("../database/connectionDB");
 const user_1 = __importDefault(require("../models/user"));
 const myQueryAsync = (query) => {
     return new Promise((resolve, reject) => {
-        connectionDB_1.default.query(query, function (err, result, fields) {
+        connectionDB_1.dbMysql.query(query, function (err, result, fields) {
             if (err)
                 return reject(err);
             resolve(result);

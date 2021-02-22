@@ -1,7 +1,7 @@
 import express, {Application} from 'express';
 import cors from 'cors';
 import  userRouter from '../routes/userRoutes';
-import db from '../database/connectionDB';
+import {db, dbMysql} from '../database/connectionDB';
 
 export class Server {
   
@@ -17,6 +17,7 @@ export class Server {
     this.port = process.env.PORT || '8000';
 
     this.connectToDatabase();
+    this.connectToDatabaseMySql()
     //Important methods which have preference in the middleware stack
     this.middlewares();
     //My routes 
@@ -33,20 +34,20 @@ export class Server {
     this.app.use(this.apiPathsEndpoint.users, userRouter)
   }
   //CONEXION WITH SEQUELIZE TO MYSQL
-  // async connectToDatabase () {
-  //   try {
-  //     await db.authenticate();
-  //     console.log('Database online')
-  //   } catch(error) {
-  //     throw new Error(error)
-  //   }
-  // }
+  async connectToDatabase () {
+    try {
+      await db.authenticate();
+      console.log('Database online')
+    } catch(error) {
+      throw new Error(error)
+    }
+  }
 
   //Just regular conexion with MYSQL 
 
-  async connectToDatabase () {
+   connectToDatabaseMySql () {
 
-    await db.connect((err)=> {
+     dbMysql.connect((err)=> {
       if(err) throw err;
       console.log('Connected')
     });

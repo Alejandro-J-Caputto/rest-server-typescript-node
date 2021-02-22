@@ -4,14 +4,14 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 
-// const db = new Sequelize('nodeTypeScript', 'root', process.env.passDB, {
-//   host: 'localhost',
-//   dialect: 'mysql',
-//   port: 8889
-//   // logging: false,
-// });
+export const db = new Sequelize('nodeTypeScript', 'root', process.env.passDB, {
+  host: 'localhost',
+  dialect: 'mysql',
+  port: 8889
+  // logging: false,
+});
 
-const db = mysql.createConnection({
+export const dbMysql = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
@@ -21,4 +21,3 @@ const db = mysql.createConnection({
   
 })
 
-export default db;

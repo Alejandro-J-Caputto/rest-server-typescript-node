@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import db from "../database/connectionDB";
+import {dbMysql} from "../database/connectionDB";
 import User from "../models/user";
 
-const myQueryAsync = (query) => {
+const myQueryAsync = (query: string) => {
   return new Promise ((resolve, reject) => {
-    db.query(query, function(err, result, fields) {
+    dbMysql.query(query, function(err, result, fields) {
       if(err) return reject(err);
       resolve(result)
     })

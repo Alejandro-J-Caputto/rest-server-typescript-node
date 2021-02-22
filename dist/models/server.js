@@ -16,7 +16,7 @@ exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const userRoutes_1 = __importDefault(require("../routes/userRoutes"));
-const connectionDB_1 = __importDefault(require("../database/connectionDB"));
+const connectionDB_1 = require("../database/connectionDB");
 class Server {
     constructor() {
         this.apiPathsEndpoint = {
@@ -25,6 +25,7 @@ class Server {
         this.app = express_1.default();
         this.port = process.env.PORT || '8000';
         this.connectToDatabase();
+        this.connectToDatabaseMySql();
         //Important methods which have preference in the middleware stack
         this.middlewares();
         //My routes 
@@ -40,22 +41,23 @@ class Server {
         this.app.use(this.apiPathsEndpoint.users, userRoutes_1.default);
     }
     //CONEXION WITH SEQUELIZE TO MYSQL
-    // async connectToDatabase () {
-    //   try {
-    //     await db.authenticate();
-    //     console.log('Database online')
-    //   } catch(error) {
-    //     throw new Error(error)
-    //   }
-    // }
-    //Just regular conexion with MYSQL 
     connectToDatabase() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield connectionDB_1.default.connect((err) => {
-                if (err)
-                    throw err;
-                console.log('Connected');
-            });
+            try {
+                yield connectionDB_1.db.authenticate();
+                console.log('Database online');
+            }
+            catch (error) {
+                throw new Error(error);
+            }
+        });
+    }
+    //Just regular conexion with MYSQL 
+    connectToDatabaseMySql() {
+        connectionDB_1.dbMysql.connect((err) => {
+            if (err)
+                throw err;
+            console.log('Connected');
         });
     }
     listen() {
