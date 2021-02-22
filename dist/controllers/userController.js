@@ -13,13 +13,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.putUser = exports.postUser = exports.getUser = exports.getUsers = void 0;
+const connectionDB_1 = __importDefault(require("../database/connectionDB"));
 const user_1 = __importDefault(require("../models/user"));
+const myQueryAsync = (query) => {
+    return new Promise((resolve, reject) => {
+        connectionDB_1.default.query(query, function (err, result, fields) {
+            if (err)
+                return reject(err);
+            resolve(result);
+        });
+    });
+};
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield user_1.default.findAll();
+    const users = yield myQueryAsync('SELECT * FROM users');
+    //   db.query("SELECT * FROM users", function(err, result, fields) {
+    //     if(err) throw err;
+    //     res.status(200).json({
+    //       msg: 'getUSers',
+    //       result
+    //     })
+    // }
     res.status(200).json({
-        msg: 'getUsers',
+        msg: 'getUSers',
         users
     });
+    // const users = await User.findAll();
+    // res.status(200).json({
+    //   msg: 'getUsers',
+    //   users
+    // })
 });
 exports.getUsers = getUsers;
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

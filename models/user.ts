@@ -1,18 +1,18 @@
-import { DataTypes } from 'sequelize';
-import db from '../database/connectionDB';
+// import { DataTypes } from 'sequelize';
+// import db from '../database/connectionDB';
 
 
-const User = db.define('User', {
-  name: {
-    type: DataTypes.STRING
-  },
-  email: {
-    type: DataTypes.STRING
-  },
-  active: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
-  }
-})
+// const User = db.define('User', {
+//   name: {
+//     type: DataTypes.STRING
+//   },
+//   email: {
+//     type: DataTypes.STRING
+//   },
+//   active: {
+//     type: DataTypes.BOOLEAN,
+//     defaultValue: true
+//   }
+// })
 
-export default User;
+// export default User;

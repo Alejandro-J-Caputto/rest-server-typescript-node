@@ -32,15 +32,26 @@ export class Server {
   routes() {
     this.app.use(this.apiPathsEndpoint.users, userRouter)
   }
+  //CONEXION WITH SEQUELIZE TO MYSQL
+  // async connectToDatabase () {
+  //   try {
+  //     await db.authenticate();
+  //     console.log('Database online')
+  //   } catch(error) {
+  //     throw new Error(error)
+  //   }
+  // }
+
+  //Just regular conexion with MYSQL 
 
   async connectToDatabase () {
-    try {
-      await db.authenticate();
-      console.log('Database online')
-    } catch(error) {
-      throw new Error(error)
-    }
-  }
+
+    await db.connect((err)=> {
+      if(err) throw err;
+      console.log('Connected')
+    });
+  
+}
 
   listen() {
     this.app.listen(this.port, () => {

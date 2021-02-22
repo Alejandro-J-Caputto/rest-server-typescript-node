@@ -39,15 +39,23 @@ class Server {
     routes() {
         this.app.use(this.apiPathsEndpoint.users, userRoutes_1.default);
     }
+    //CONEXION WITH SEQUELIZE TO MYSQL
+    // async connectToDatabase () {
+    //   try {
+    //     await db.authenticate();
+    //     console.log('Database online')
+    //   } catch(error) {
+    //     throw new Error(error)
+    //   }
+    // }
+    //Just regular conexion with MYSQL 
     connectToDatabase() {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield connectionDB_1.default.authenticate();
-                console.log('Database online');
-            }
-            catch (error) {
-                throw new Error(error);
-            }
+            yield connectionDB_1.default.connect((err) => {
+                if (err)
+                    throw err;
+                console.log('Connected');
+            });
         });
     }
     listen() {

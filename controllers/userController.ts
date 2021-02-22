@@ -1,17 +1,38 @@
 import { Request, Response } from "express";
+import db from "../database/connectionDB";
 import User from "../models/user";
 
+const myQueryAsync = (query) => {
+  return new Promise ((resolve, reject) => {
+    db.query(query, function(err, result, fields) {
+      if(err) return reject(err);
+      resolve(result)
+    })
+   
+  })
+}
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers =  async (req: Request, res: Response) => {
 
+  const users = await myQueryAsync('SELECT * FROM users');
 
-
-  const users = await User.findAll();
-
+  //   db.query("SELECT * FROM users", function(err, result, fields) {
+  //     if(err) throw err;
+  //     res.status(200).json({
+  //       msg: 'getUSers',
+  //       result
+  //     })
+  // }
   res.status(200).json({
-    msg: 'getUsers',
+    msg: 'getUSers',
     users
   })
+  // const users = await User.findAll();
+
+  // res.status(200).json({
+  //   msg: 'getUsers',
+  //   users
+  // })
 
 }
 
